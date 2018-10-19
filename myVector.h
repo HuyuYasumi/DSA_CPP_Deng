@@ -241,7 +241,7 @@ template <typename T> bool Vector<T>::bubble(Rank lo, Rank hi) {
     Rank last = lo;
     while(++lo < hi)
         if(_elem[lo - 1] > _elem[lo]) {
-            last = lo
+            last = lo;
             swap(_elem[lo - 1], _elem[lo]);
         }
     return last;
