@@ -1,7 +1,3 @@
-//
-// Created by Natsu on 2018/10/4.
-//
-
 #ifndef DSA_CPP_DENG_MYVECTOR_H
 #define DSA_CPP_DENG_MYVECTOR_H
 
@@ -61,57 +57,50 @@ public:
     Rank size() const {
         return _size;
     }
-
     bool empty() const {
         return !_size;
     }
-
     int disordered() const; //判断向量是否已排序
 
+/* 查找 */
     Rank find(T const& e) const { //无序向量整体查找
         return find(e, 0, (Rank)_size);
     }
-
     Rank find(T const& e, Rank lo, Rank hi) const; //无序向量区间查找
-
     Rank search(T const& e) const { //有序向量整体查找
         return (0 >= _size) ? -1 : serach(e, (Rank)0, (Rank)_size);
     }
-
     Rank search(T const& e, Rank lo, Rank hi) const; //有序向量区间查找
 
-/* 可写访问接口 */
+/* 操作符重载 */
     T& operator [] (Rank r) const; //重载下标操作符
-
     Vector<T> & operator = (Vector<T> const&); //重载赋值操作符
 
+/* 删除 */
     T remove(Rank r);
-
     int remove(Rank lo, Rank hi);
 
+/* 插入 */
     Rank insert(Rank r, T const& e);
-
     Rank insert(T const& e) {
         return insert(_size, e);
     }
 
+/* 排序 */
     void sort(Rank lo, Rank hi);
-
     void sort() {
         sort(0, _size);
     }
-
     void unsort(Rank lo, Rank hi);
-
     void unsort() {
         unsort(0, _size);
     }
 
+/* 去重 */
     int deduplicate(); //无序去重
-
     int uniquify(); //有序去重
 
-    /* 遍历 */
+/* 遍历 */
     void traverse(void (*)(T&));
     template <typename VST> void traverse(VST&);
 }; //Vector
