@@ -71,4 +71,32 @@ bool parenIter(const char exp[], int lo, int hi) {
         return false;
     return paren(exp, lo + 1, mi -1) && paren(exp, mi + 1, hi);
 }
+
+// 表达式括号匹配检查（栈与迭代），可兼顾三种括号
+bool parenStack(const char exp[], int lo, int hi) {
+    Stack<char> S;
+    for(int i = 0; exp[i]; ++i) {
+        switch(exp[i]) {
+            case '(':
+            case '[':
+            case '{':
+                S.push(exp[i]);
+                break;
+            case ')':
+                if((S.empty()) || ('(' != S.pop()))
+                    return false;
+                break;
+            case ']':
+                if((S.empty()) || ('[' != S.pop()))
+                    return false;
+                break;
+            case '}':
+                if((S.empty()) || '{' != S.pop())
+                    return false;
+                break;
+            default:break;
+        }
+    }
+    return S.empty();
+}
 #endif //DSA_CPP_DENG_MYSTACK_H
