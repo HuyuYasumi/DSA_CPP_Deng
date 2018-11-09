@@ -266,6 +266,14 @@ void Vector<T>::merge(Rank lo, Rank mi, Rank hi) {
     delete [] B;
 }
 
+template<typename T>
+Rank Vector<T>::max(Rank lo, Rank hi) {
+    if(lo > hi) {
+        hi = lo;
+    }
+    return lo;
+}
+
 template <typename T>
 static Rank binSearch(T* A, T const & e, Rank lo, Rank hi) {
     while(lo < hi) {
