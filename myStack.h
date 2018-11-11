@@ -1,6 +1,7 @@
 #ifndef DSA_CPP_DENG_MYSTACK_H
 #define DSA_CPP_DENG_MYSTACK_H
 
+//#include <locale>
 #include "myVector.h"
 template <typename T> class Stack: public Vector<T> {
 public:
@@ -69,7 +70,7 @@ bool parenIter(const char exp[], int lo, int hi) {
     int mi = divide(exp, lo, hi);
     if(mi > hi)
         return false;
-    return paren(exp, lo + 1, mi -1) && paren(exp, mi + 1, hi);
+    return parenIter(exp, lo + 1, mi -1) && parenIter(exp, mi + 1, hi);
 }
 
 // 表达式括号匹配检查（栈与迭代），可兼顾三种括号
@@ -99,4 +100,58 @@ bool parenStack(const char exp[], int lo, int hi) {
     }
     return S.empty();
 }
+
+/*
+ #define N_OPTR 9
+typedef enum {ADD, SUB, MUL, DIV, POW, FAC, L_P, R_P, EOE} Operator;
+
+const char pri[N_OPTR][N_OPTR] = {
+        /*        +    -    *    /    ^    !    (    )    \0 */
+        /* + */  '>', '>', '<', '<', '<', '<', '<', '>', '>',
+        /* - */  '>', '>', '<', '<', '<', '<', '<', '>', '>',
+        /* * */  '>', '>', '>', '>', '<', '<', '<', '>', '>',
+        /* / */  '>', '>', '>', '>', '<', '<', '<', '>', '>',
+        /* ^ */  '>', '>', '>', '>', '>', '<', '<', '>', '>',
+        /* ! */  '>', '>', '>', '>', '>', '>', ' ', '>', '>',
+        /* ( */  '<', '<', '<', '<', '<', '<', '<', '=', ' ',
+        /* ) */  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+        /* \0 */ '<', '<', '<', '<', '<', '<', '<', ' ', '=',/*
+};
+/*
+float evaluate(char* S, char*& RPN) {
+    Stack<float> opnd;
+    Stack <char> optr;
+    optr.push('\0');
+    while(!optr.empty()) {
+        if(isdigit(*S)) {
+            readNumber(S, opnd);
+            append(RPN, opnd.top());
+        } else {
+            switch(orderBetween(optr.top(), *S)) {
+                case '<':
+                    optr.push(*S);
+                    S++;
+                    break;
+                case '=':
+                    optr.pop();
+                    ++S;
+                    break;
+                case '>':
+                    char op = optr.pop();
+                    append(RPN, op);
+                    if('!' == op) {
+                        float pOpnd = opnd.pop();
+                        opnd.push(calcu(op, pOpnd));
+                    } else {
+                        float pOpnd2 = opnd.pop(), pOpnd1 = opnd.pop();
+                        opnd.push(calcu(pOpnd1, op,pOpnd2);
+                    }
+                    break;
+                default:exit(-1);
+            } // switch
+        }
+    } // while
+    return opnd.pop();
+}
+*/
 #endif //DSA_CPP_DENG_MYSTACK_H
