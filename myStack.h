@@ -9,7 +9,7 @@ public:
         this->insert(this->size(), e);
     }
     T pop() {
-        return remove(this->size() - 1);
+        return this->remove(this->size() - 1);
     }
     T& top() {
         return (*this)[this->size() - 1];
@@ -17,7 +17,7 @@ public:
 };
 
 // 十进制数n 到base 进制的转换（递归版）
-void convertRecursive(Stack<char> &S, __int64 n, int base) {
+void convertRecursive(Stack<char> &S, __int64_t n, int base) {
     static char digit[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
             'B', 'C', 'D', 'E', 'F'};
     if(0 < n) {
@@ -27,7 +27,7 @@ void convertRecursive(Stack<char> &S, __int64 n, int base) {
 }
 
 // 十进制数n 到base 进制的转换（迭代版）
-void convertIter(Stack<char>& S, __int64 n, int base) {
+void convertIter(Stack<char>& S, __int64_t n, int base) {
     static char digit[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
            'B', 'C', 'D', 'E', 'F'};
     while(0 < n) {
@@ -102,22 +102,24 @@ bool parenStack(const char exp[], int lo, int hi) {
 }
 
 /*
- #define N_OPTR 9
+#define N_OPTR 9
 typedef enum {ADD, SUB, MUL, DIV, POW, FAC, L_P, R_P, EOE} Operator;
 
 const char pri[N_OPTR][N_OPTR] = {
-        /*        +    -    *    /    ^    !    (    )    \0 */
-        /* + */  '>', '>', '<', '<', '<', '<', '<', '>', '>',
-        /* - */  '>', '>', '<', '<', '<', '<', '<', '>', '>',
-        /* * */  '>', '>', '>', '>', '<', '<', '<', '>', '>',
-        /* / */  '>', '>', '>', '>', '<', '<', '<', '>', '>',
-        /* ^ */  '>', '>', '>', '>', '>', '<', '<', '>', '>',
-        /* ! */  '>', '>', '>', '>', '>', '>', ' ', '>', '>',
-        /* ( */  '<', '<', '<', '<', '<', '<', '<', '=', ' ',
-        /* ) */  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        /* \0 */ '<', '<', '<', '<', '<', '<', '<', ' ', '=',/*
-};
+*/
+//        /*        +    -    *    /    ^    !    (    )    \0 */
+//        /* + */  '>', '>', '<', '<', '<', '<', '<', '>', '>',
+//        /* - */  '>', '>', '<', '<', '<', '<', '<', '>', '>',
+//        /* * */  '>', '>', '>', '>', '<', '<', '<', '>', '>',
+//        /* / */  '>', '>', '>', '>', '<', '<', '<', '>', '>',
+//        /* ^ */  '>', '>', '>', '>', '>', '<', '<', '>', '>',
+//        /* ! */  '>', '>', '>', '>', '>', '>', ' ', '>', '>',
+//        /* ( */  '<', '<', '<', '<', '<', '<', '<', '=', ' ',
+//        /* ) */  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+//        /* \0 */ '<', '<', '<', '<', '<', '<', '<', ' ', '=',
 /*
+};
+
 float evaluate(char* S, char*& RPN) {
     Stack<float> opnd;
     Stack <char> optr;
