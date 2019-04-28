@@ -3,4 +3,5 @@ project(DSA_CPP_Deng)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(DSA_CPP_Deng main.cpp myVector.h listNode.h myList.h myStack.h myQueue.h myBinNode.h myBinTree.h)
+add_executable(DSA_CPP_Deng main.cpp myVector.h listNode.h myList.h myStack.h myQueue.h myBinNode.h myBinTree.h
+        myEntry.h myBST.h myGraph.h myGraphMatrix.h)
