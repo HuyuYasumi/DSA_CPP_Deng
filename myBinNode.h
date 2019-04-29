@@ -103,7 +103,7 @@ template <typename T> struct BinNode {
         }
     }
 
-    void gotoHLVFL(Stack<BinNodePosi(T)& S) {
+    void gotoHLVFL(Stack<BinNodePosi(T)>& S) {
         while(BinNodePosi(T) x = S.pop()) {
             if(HasLChild(x)) {
                 if(HasRChild(x))
@@ -132,18 +132,14 @@ template <typename T> BinNodePosi(T) BinNode<T>::insertAsLC(T const & e) {
     return lChild = new BinNode(e, this);
 }
 
-template <typename T> BinNodePosi(T) BinNode<T>::insertAsRC(T const &) {
+template <typename T> BinNodePosi(T) BinNode<T>::insertAsRC(T const & e) {
     return rChild = new BinNode(e, this);
 }
 
-template <typename T> BinNodePosi(T) BinNode<T>::travIn(VST& vist) {
-    switch(rand() % 5) {
-        case 1: travIn_I1(this, visit); break;    //迭代版#1
-        case 2: travIn_I2(this, visit); break;    //迭代版#2
-        case 3: travIn_I3(this, visit); break;    //迭代版#3
-        case 4: travIn_I4(this, visit); break;    //迭代版#4
-        default : travIn_R(this, visit); break;    //递归版
-    }
+template <typename T>
+template <typename VST>
+void BinNode<T>::travIn(VST& visit) {
+    travIn_I1(this, visit);
 }
 
 template <typename T> BinNodePosi(T) BinNode<T>::succ() {
@@ -182,6 +178,18 @@ void BinNode<T>::travLevel(VST & visit) {
         if(HasRChild(x))
             Q.enqueue(x->rChild);
     }
+}
+
+template<typename T>
+template<typename VST>
+void BinNode<T>::travPre(VST &visit) {
+    travPre_I2(this, visit);
+}
+
+template<typename T>
+template<typename VST>
+void BinNode<T>::travPost(VST & visit) {
+    travPost_I(this, visit);
 }
 
 #endif //DSA_CPP_DENG_MYBINNODE_H

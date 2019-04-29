@@ -33,19 +33,19 @@ public:
     BinNodePosi(T) attachAsRC(BinNodePosi(T) x, BinTree<T>* &e);    //T作为右子树插入
     int remove(BinNodePosi(T) x);    //删除以节点x为根的子树，返回其规模
     BinTree<T>* secede(BinNodePosi(T) x);    //将子树摘除，并将其转换为独立的子树
-    template <template VST> void travLevel(VST& visit) {    //层次遍历
+    template <typename VST> void travLevel(VST& visit) {    //层次遍历
         if(_root)
             _root->travLevel(visit);
     }
-    template <template VST> void travPre(VST& visit) {    //前序遍历
+    template <typename VST> void travPre(VST& visit) {    //前序遍历
         if(_root)
             _root->travPre(visit);
     }
-    template <template VST> void travIn(VST& visit) {    //中序遍历
+    template <typename VST> void travIn(VST& visit) {    //中序遍历
         if(_root)
             _root->travIn(visit);
     }
-    template <template VST> void travPost(VST& visit) {    //后序遍历
+    template <typename VST> void travPost(VST& visit) {    //后序遍历
         if(_root)
             _root->travPost(visit);
     }
