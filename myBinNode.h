@@ -8,7 +8,7 @@
 #define BinNodePosi(T) BinNode<T>*
 #define max(x, y) (x > y ? x : y)
 #define stature(p) ((p) ? (p)->height : -1)
-#define IsRoot(x) (!((x).parent))
+#define IsRoot(x) (!(x).parent)
 #define IsLChild(x) (!IsRoot(x) && (&(x) == (x).parent->lChild))
 #define IsRChild(x) (!IsRoot(x) && (&(x) == (x).parent->rChild))
 #define HasParent(x) (!IsRoot(x))
@@ -52,19 +52,19 @@ template <typename T> struct BinNode {
 
 /* 比较器、判等器 */
     bool operator<(BinNodePosi(T) bn) {
-        return data < bn.data;
+        return data < bn->data;
     }
     bool operator>(BinNodePosi(T) bn) {
-        return data > bn.data;
+        return data > bn->data;
     }
     bool operator==(BinNodePosi(T) bn) {
-        return data == bn.data;
+        return data == bn->data;
     }
     bool operator<=(BinNodePosi(T) bn) {
-        return data <= bn.data;
+        return data <= bn->data;
     }
     bool operator>=(BinNodePosi(T) bn) {
-        return data >= bn.data;
+        return data >= bn->data;
     }
 
     template <typename VST> static void visitAlongLeftBranch(BinNodePosi(T) x, VST& visit, Stack<BinNodePosi(T)>& S) {
@@ -149,7 +149,7 @@ template <typename T> BinNodePosi(T) BinNode<T>::succ() {
         while(HasLChild(x))
             x = x->lChild;
     } else {
-        while(IsRChild(&x))
+        while(IsRChild(*x))
             x = x->parent;
         x = x->parent;
     }

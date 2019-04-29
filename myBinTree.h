@@ -3,6 +3,10 @@
 
 #include "myBinNode.h"
 
+template <typename T> static void release(T& x) {
+    delete &x;
+}
+
 template <typename T> class BinTree {
 protected:
     int _size;
@@ -137,7 +141,7 @@ template <typename T> int BinTree<T>::removeAt(BinNode<T> *x) {
         return 0;
     int n = 1 + removeAt(x->lChild) + removeAt(x->rChild);
     release(x->data);
-    release(x);
+    release(*x);
     return n;
 }
 
