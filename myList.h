@@ -8,7 +8,8 @@ typedef int Rank;
 template <typename T> class List {
 private:
     int _size;
-    ListNodePosi(T) header, trailer;
+    ListNodePosi(T) header;
+    ListNodePosi(T) trailer;
 
 protected:
     void init();
@@ -51,7 +52,7 @@ public:
     }
     ListNodePosi(T) search(T const& e, int n, ListNodePosi(T) p) const;    // 有序区间查找
     ListNodePosi(T) selectMax() {    // 整体最大者
-        return selectMax(header->succ, _szie);
+        return selectMax(header->succ, _size);
     }
     ListNodePosi(T) selectMax(ListNodePosi(T) p, int n);    // 在p 及其前n-1个后继中找出最大者
 
@@ -77,8 +78,8 @@ public:
 };
 
 template <typename T> void List<T>::init() {
-    header = new ListNode<T>;
-    trailer = new ListNode<T>;
+    header = new ListNode<T>();
+    trailer = new ListNode<T>();
     header->succ = trailer;
     header->pred = nullptr;
     trailer->pred = header;
@@ -152,8 +153,8 @@ template <typename T> T List<T>::remove(ListNode<T> *p) {
 
 template <typename T> List<T>::~List() {
     clear();
-    delete header;
-    delete trailer;
+    delete &header;
+    delete &trailer;
 }
 
 template <typename T> int List<T>::clear() {
