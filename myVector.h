@@ -274,6 +274,20 @@ Rank Vector<T>::max(Rank lo, Rank hi) {
     return lo;
 }
 
+template<typename T>
+void Vector<T>::shrink() {
+    if(_size >= (_capacity >> 1))
+        return;
+    _capacity >>= 1;
+    _capacity = max(_capacity, DEFAULT_CAPACITY);
+    T* old = _elem;
+    _elem = new T[_capacity];
+    for (int i = 0; i < _size; ++i) {
+        _elem[i] = old[i];
+    }
+    delete [] old;
+}
+
 template <typename T>
 static Rank binSearch(T* A, T const & e, Rank lo, Rank hi) {
     while(lo < hi) {
