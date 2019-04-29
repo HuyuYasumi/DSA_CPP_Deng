@@ -17,7 +17,7 @@ public:
 };
 
 // 十进制数n 到base 进制的转换（递归版）
-void convertRecursive(Stack<char> &S, __int64_t n, int base) {
+void convertRecursive(Stack<char> &S, int64_t n, int base) {
     static char digit[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
             'B', 'C', 'D', 'E', 'F'};
     if(0 < n) {
@@ -27,7 +27,7 @@ void convertRecursive(Stack<char> &S, __int64_t n, int base) {
 }
 
 // 十进制数n 到base 进制的转换（迭代版）
-void convertIter(Stack<char>& S, __int64_t n, int base) {
+void convertIter(Stack<char>& S, int64_t n, int base) {
     static char digit[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
            'B', 'C', 'D', 'E', 'F'};
     while(0 < n) {
@@ -74,7 +74,7 @@ bool parenIter(const char exp[], int lo, int hi) {
 }
 
 // 表达式括号匹配检查（栈与迭代），可兼顾三种括号
-bool parenStack(const char exp[], int lo, int hi) {
+bool parenStack(const char exp[]) {
     Stack<char> S;
     for(int i = 0; exp[i]; ++i) {
         switch(exp[i]) {
