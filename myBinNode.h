@@ -19,7 +19,7 @@
 #define IsLeaf(x) (!HasChild(x))
 #define sibling(p) ((IsLChild(*p)) ? (p)->parent->rChild : (p)->parent->lChild)    //返回兄弟
 #define uncle(x) (sibling((x).parent))    //返回叔叔
-#define FromParentTo(x) (IsRoot(x) ? _root : \
+#define FromParentTo(x) (IsRoot(x) ? this->_root : \
         (IsLChild(x) ? (x).parent->lChild : (x).parent->rChild))    //来自父亲的指针
 
 typedef enum {RB_RED, RB_BLACK} RBColor;
