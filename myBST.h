@@ -18,7 +18,7 @@ protected:
     BinNodePosi(T) connect34(BinNodePosi(T), BinNodePosi(T), BinNodePosi(T),
             BinNodePosi(T), BinNodePosi(T), BinNodePosi(T), BinNodePosi(T));    // 按照“3+4”结构联接3个节点和四颗子树
 
-    BinNodePosi(T) rotateAt(BinNodePosi(T) x);    // 对x及其父母、祖先做统一旋转调整
+    BinNodePosi(T) rotateAt(BinNodePosi(T) v);    // 对x及其父母、祖先做统一旋转调整
 };
 
 /**
@@ -81,6 +81,66 @@ template <typename T> bool BST<T>::remove(const T &e) {
     this->_size--;
     this->updateHeightAbove(_hot);
     return true;
+}
+
+/**
+ * 按照（３＋４）结构联结３个节点和４棵子树
+ * @return 返回联结后的局部子树的根节点（即ｂ）
+ * 子树根节点与它上层节点的双向联结，均须由上层调用者完成
+ * 可用于ＡＶＬ、ＲｅｄＢｌａｃｋ的局部平衡调整
+ */
+template<typename T>
+BinNode<T> *BST<T>::connect34(BinNode<T> * a, BinNode<T> * b, BinNode<T> *c,
+        BinNode<T> * T0, BinNode<T> *T1, BinNode<T> *T2, BinNode<T> *T3) {
+    a->lChild = T0;
+    if(T0)
+        T0->parent = a;
+    a->rChild = T1;
+    if(T1)
+        T1->parent = a;
+    this->updateHeight(a);
+    c->lChild = T2;
+    if(T2)
+        T2->parent = c;
+    c->rChild = T3;
+    if(T3)
+        T3->parent = c;
+    this->updateHeight(c);
+    b->lChild = a;
+    a->parent = b;
+    b->rChild = c;
+    c->parent = b;
+    this->updateHeight(b);
+    return b;
+}
+
+/**
+ * ＢＳＴ节点旋转变换统一算法（３节点＋４子树）
+ * 注意，尽管子树根会正确指向上层节点（如果存在），但反向的联结须由上层调用者完成
+ * @param v 非空的孙辈节点
+ * @return 返回调整后的局部子树根节点的位置
+ */
+template<typename T>
+BinNode<T> *BST<T>::rotateAt(BinNode<T> *v) {
+    BinNodePosi(T) p = v->parent;
+    BinNodePosi(T) g = p->parent;
+    if(IsLChild(*p)) {
+        if(IsLChild(*v)) {  // zig, zig
+            p->parent = g->parent;  // 局部根节点向上联结
+            return connect34(v, p, g, v->lChild, v->rChild, p->rChild, g->rChild);
+        } else {  // zag, zig
+            v->parent = g->parent;  // 局部根节点向上联结
+            return connect34(p, v, g, p->lChild, v->lChild, v->rChild, g->rChild);
+        }
+    } else {
+        if(IsRChild(*v)) {  // zag, zag
+            p->parent = g->parent;  // 局部根节点向上联结
+            return connect34(g, p, v, g->lChild, p->lChild, v->lChild, v->rChild);
+        } else {  // zig, zag
+            v->parent = g->parent;  // 局部根节点向上联结
+            return connect34(g, v, p, g->lChild, v->lChild, v->rChild, p->rChild);
+        }
+    }
 }
 
 #endif //DSA_CPP_DENG_MYBST_H
