@@ -68,7 +68,7 @@ public:
     }
     Rank find(T const& e, Rank lo, Rank hi) const; //无序向量区间查找
     Rank search(T const& e) const { //有序向量整体查找
-        return (0 >= _size) ? -1 : serach(e, (Rank)0, (Rank)_size);
+        return (0 >= _size) ? -1 : search(e, (Rank)0, (Rank)_size);
     }
     Rank search(T const& e, Rank lo, Rank hi) const; //有序向量区间查找
 
@@ -196,8 +196,7 @@ template <typename T> int Vector<T>::uniquify() {
 
 template <typename T>
     Rank Vector<T>::search(T const & e, Rank lo,Rank hi) const {
-    return (rand() % 2) ? binSearch(_elem, e, lo, hi)
-                        : fibSearch(_elem, e, lo, hi);
+    return binSearch(_elem, e, lo, hi);
 }
 
 template <typename T>
