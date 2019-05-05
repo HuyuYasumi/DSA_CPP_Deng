@@ -6,6 +6,31 @@
 
 typedef int Rank;
 
+// 返回不大于目标值的最后一个元素的下标
+template <typename T>
+static Rank binSearch(T* A, T const & e, Rank lo, Rank hi) {
+    while(lo < hi) {
+        Rank mi = (lo + hi) >> 1;
+        (e < A[mi]) ? hi = mi : lo = mi + 1;
+    }
+    return --lo;
+}
+
+template <typename T>
+static Rank binSearchExact(T* A, T const &e, Rank lo, Rank hi) {
+    Rank mi = 0;
+    while(lo < hi) {
+        mi = (lo + hi) >> 1;
+        if(e < A[mi])
+            hi = mi;
+        else if(A[mi] < e)
+            lo = mi + 1;
+        else
+            return mi;
+    }
+    return -1;
+}
+
 template <typename T> class Vector {
 protected:
     Rank _size;
@@ -67,10 +92,15 @@ public:
         return find(e, 0, (Rank)_size);
     }
     Rank find(T const& e, Rank lo, Rank hi) const; //无序向量区间查找
+    // 注意：search 接口约定的返回值是不大于目标的最后一个元素的下标（除非向量为空）
     Rank search(T const& e) const { //有序向量整体查找
         return (0 >= _size) ? -1 : search(e, (Rank)0, (Rank)_size);
     }
     Rank search(T const& e, Rank lo, Rank hi) const; //有序向量区间查找
+    // 注意：searchExact 接口约定的返回值是精确的
+    Rank searchExact(T const& e) const {
+        return (_size <= 0) ? -1 : binSearchExact(_elem, e, (Rank)0, (Rank)_size);
+    }
 
 /* 操作符重载 */
     T& operator [] (Rank r) const; //重载下标操作符
@@ -285,15 +315,6 @@ void Vector<T>::shrink() {
         _elem[i] = old[i];
     }
     delete [] old;
-}
-
-template <typename T>
-static Rank binSearch(T* A, T const & e, Rank lo, Rank hi) {
-    while(lo < hi) {
-        Rank mi = (lo + hi) >> 1;
-        (e < A[mi]) ? hi = mi : lo = mi + 1;
-    }
-    return --lo;
 }
 
 #endif //DSA_CPP_DENG_MYVECTOR_H
